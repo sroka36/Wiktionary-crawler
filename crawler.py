@@ -340,9 +340,9 @@ def get_character_data(character):
                          
                          data['japanese_readings']['kanon'] = val.strip(': ').strip()
 
-            # Check for TO-ON
+            # Check for Tō-ON
             if not data['japanese_readings']['toon']:
-                toon_link = curr.find('a', string=lambda s: s and 'To-on' in s)
+                toon_link = curr.find('a', string=lambda s: s and 'Tō-on' in s)
                 if toon_link:
                     li = toon_link.find_parent('li')
                     if li:
