@@ -314,7 +314,7 @@ def get_character_data(character):
                 curr = curr.next_sibling
                 continue
             
-            # Check for GO-ON
+            # Check for Go-on
             if not data['japanese_readings']['goon']:
                 goon_link = curr.find('a', string=lambda s: s and 'Go-on' in s)
                 if goon_link:
@@ -325,7 +325,7 @@ def get_character_data(character):
                              val = text.split('Go-on')[-1].strip(': ').strip()
                              data['japanese_readings']['goon'] = val
 
-            # Check for KAN-ON
+            # Check for Kan-on
             if not data['japanese_readings']['kanon']:
                 kanon_link = curr.find('a', string=lambda s: s and ("Kan'on" in s or "Kan-on" in s))
                 if kanon_link:
@@ -340,7 +340,7 @@ def get_character_data(character):
                          
                          data['japanese_readings']['kanon'] = val.strip(': ').strip()
 
-            # Check for Tō-ON
+            # Check for Tō-on
             if not data['japanese_readings']['toon']:
                 toon_link = curr.find('a', string=lambda s: s and 'Tō-on' in s)
                 if toon_link:
