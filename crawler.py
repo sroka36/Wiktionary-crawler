@@ -6,7 +6,7 @@ import json
 
 def get_character_data(character):
     
-    # 1. Fetch URL and set headers for hiding it is crawler.
+    # url 지정하고, 크롤러 차단 회피.
     url = f"https://en.wiktionary.org/wiki/{character}"
     headers = {
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36'
@@ -14,7 +14,7 @@ def get_character_data(character):
     
     try:
         response = requests.get(url, headers=headers)
-        # Check if it works successfully.
+        # 응답 확인
         response.raise_for_status()
         with open('debug.html', 'w', encoding='utf-8') as f:
             f.write(response.text)
@@ -23,7 +23,7 @@ def get_character_data(character):
         print(f"Error fetching page for {character}: {e}", file=sys.stderr)
         return None
 
-    # 2. Parse HTML
+    # 2. HTML 파싱
     soup = BeautifulSoup(response.content, 'html.parser')
 
     data = {
@@ -44,14 +44,14 @@ def get_character_data(character):
         }
     }
 
-    # 3. Get Cangjie
-    cangjie_link = soup.select_one('a[title="Appendix:Chinese Cangjie"]')
+    # 3. 창힐 수입법 찾기
+    cangjie_link = soup.select_one('span.Hani[lang="mul"]')
     if cangjie_link:
-        container = cangjie_link.find_parent(['p', 'div', 'tr'])
+        container = cangjie_link.find_parent(['p', 'div'])
         if container:
-            target_span = container.select_one('span.Hani')
-            if target_span:
-                data['cangjie'] = target_span.get_text(strip=True)
+            code = cangjie_link.find_next_sibling()
+            data['cangjie'] = cangjie_link.get_text(strip=True)
+            data['cangjie'] += f'({code.get_text(strip=True)})'
 
     # 4. Find Chinese section
     chinese_content = []
