@@ -53,7 +53,7 @@ def get_character_data(character):
             data['cangjie'] = cangjie_link.get_text(strip=True)
             data['cangjie'] += f'({code.get_text(strip=True)})'
 
-    # 4. Find Chinese section
+    # 4. Chinese 파트를 찾기.
     chinese_content = []
     chinese_h2 = None
     for h2 in soup.find_all('h2'):
@@ -63,68 +63,22 @@ def get_character_data(character):
             
     
     if chinese_h2:
-        # Determine start node for traversal
-        # In modern MediaWiki, h2 might be wrapped in div.mw-heading
+        # 모던 미디어 위키에서 h2는 보통 div.mw-heading에 둘러 쌓여있으니 그 div를 찾기
         start_node = chinese_h2
         if chinese_h2.parent and 'mw-heading' in chinese_h2.parent.get('class', []):
             start_node = chinese_h2.parent
-            
+
+        #다음 h2나 mw-heading까지를 다 긁기    
         curr = start_node.next_sibling
         while curr:
-            # Stop if we hit the next h2 (or its wrapper)
             if curr.name == 'h2': 
                 break
             if curr.name == 'div' and 'mw-heading' in curr.get('class', []):
-                # Check if it's an h2 wrapper
                 if curr.find('h2'):
                     break
             
             chinese_content.append(curr)
             curr = curr.next_sibling
-
-    def search_in_chinese(query, class_name=None):
-        # Search within gathered chinese content nodes
-        for node in chinese_content:
-            if not isinstance(node, str) and node.name: # Skip nav strings
-                # Search recursively in this node
-                # Find element containing query text
-                matches = node.find_all(string=lambda t: t and query in t)
-                for match in matches:
-                    # Look for the target data
-                    # logic: find 'zhpron-monospace' nearby
-                    
-                    # 1. Check inside the same li if match is in li
-                    li = match.find_parent('li')
-                    if li:
-                        target = li.find(class_=class_name) if class_name else None
-                        if target: return target.get_text(strip=True)
-                        
-                        # 2. Check dl sibling (common for Mandarin)
-                        # e.g. <ul><li>Mandarin</li></ul><dl><dd>...</dd></dl>
-                        ul = li.find_parent('ul')
-                        if ul:
-                            next_el = ul.find_next_sibling()
-                            while next_el: 
-                                if next_el.name in ['ul', 'h3', 'h4', 'h5', 'p', 'div'] and next_el.name != 'dl':
-                                     # Don't skip too far, stopping at other blocks
-                                     # But sometimes there are P between UL and DL?
-                                     # Let's strictly look for DL or nothing
-                                     if next_el.name == 'dl': break
-                                     # If it's another list or header, stop
-                                     pass
-                                
-                                if next_el.name == 'dl':
-                                    target = next_el.find(class_=class_name)
-                                    if target: 
-                                        return target.get_text(strip=True)
-                                    break # Found DL but no target?
-                                
-                                next_el = next_el.next_sibling
-                                
-                    # 3. Just search next element with class
-                    # Be careful not to pick up other dialects
-                    pass
-        return None
 
     # 2. Mandarin
     # We gathered chinese_content, let's process it more robustly
