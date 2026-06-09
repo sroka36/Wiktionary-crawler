@@ -258,7 +258,7 @@ def get_character_data(character):
         if japanese_h2.parent and 'mw-heading' in japanese_h2.parent.get('class', []):
             start_node = japanese_h2.parent
 
-        # Traverse siblings
+        # Japanese 섹터의 형제 노드 찾기
         curr = start_node.next_sibling
         while curr:
             if curr.name == 'h2': break
