@@ -5,7 +5,7 @@ Wiktionary crawler for MSC, MC, OC, Japanese pronunciation of Kanji.
 
 **It was written by Google Gemini. But I'm reading code and fixing it now.**
 
-Fix List
+Fixing List
 - [x] Cangjie
 - [ ] Mandarin
 - [ ] MC
