@@ -245,13 +245,14 @@ def get_character_data(character):
                     if found_oc: break
             if found_oc: break
 
-    # Find Japanese section
+    # Japanese h2 찾기
     japanese_h2 = None
     for h2 in soup.find_all('h2'):
         if 'Japanese' in h2.get_text():
             japanese_h2 = h2
             break
     
+    # h2의 부모노드 찾기
     if japanese_h2:
         start_node = japanese_h2
         if japanese_h2.parent and 'mw-heading' in japanese_h2.parent.get('class', []):
