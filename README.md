@@ -10,5 +10,5 @@ Fixing List
 - [ ] Mandarin
 - [ ] MC
 - [ ] OC
-- [ ] MdJ
+- [x] MdJ
 
