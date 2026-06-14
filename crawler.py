@@ -260,15 +260,23 @@ def get_character_data(character):
 
         # Japanese 섹터의 형제 노드 찾기
         curr = start_node.next_sibling
+        on_temp = ""
+        
         while curr:
             if curr.name == 'h2': break
             if curr.name == 'div' and 'mw-heading' in curr.get('class', []):
+                 if curr.find('h4') and curr.find('h4').get('id') == 'Readings':
+                      read_list = curr.find_next_sibling()
+                      for s in read_list.find_all('span'):
+                          if "on-yomi" in s.get('class', []):
+                              print(s.get_text(separator=" ",strip=True))
                  if curr.find('h2'): break
 
             if not getattr(curr, 'find_all', None): 
                 curr = curr.next_sibling
                 continue
             
+
             # 오음 찾기
             if not data['japanese_readings']['goon']:
                 goon_link = curr.find('a', string=lambda s: s and 'Go-on' in s)
