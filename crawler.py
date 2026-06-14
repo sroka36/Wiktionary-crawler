@@ -261,6 +261,8 @@ def get_character_data(character):
         # Japanese 섹터의 형제 노드 찾기
         curr = start_node.next_sibling
         on_temp = ""
+        kan_temp = ""
+        to_temp = ""
         
         while curr:
             if curr.name == 'h2': break
@@ -268,51 +270,33 @@ def get_character_data(character):
                  if curr.find('h4') and curr.find('h4').get('id') == 'Readings':
                       read_list = curr.find_next_sibling()
                       for s in read_list.find_all('span'):
-                          if "on-yomi" in s.get('class', []):
-                              print(s.get_text(separator=" ",strip=True))
+                          if s.find_previous_sibling('b'):
+                              # 오음 구하기
+                              if s.find_previous_sibling('b').find('a').get_text() == "Go-on":
+                                  if "on-yomi" in s.get('class', []):
+                                      on_temp += s.get_text(separator=" ",strip=True)
+                              # 한음 구하기
+                              if s.find_previous_sibling('b').find('a').get_text() == "Kan-on":
+                                  if "on-yomi" in s.get('class', []):
+                                      kan_temp += s.get_text(separator=" ",strip=True)
+                              # 당음 구하기        
+                              if s.find_previous_sibling('b').find('a').get_text() == "Tō-on":
+                                  if "on-yomi" in s.get('class', []):
+                                      to_temp += s.get_text(separator=" ",strip=True)
+
+                      if(on_temp == ""): on_temp = None 
+                      if(kan_temp == ""): kan_temp = None
+                      if(to_temp == ""): to_temp = None
+
+                      data['japanese_readings']['goon']  = on_temp
+                      data['japanese_readings']['kanon'] = kan_temp
+                      data['japanese_readings']['toon'] = to_temp
+
                  if curr.find('h2'): break
 
             if not getattr(curr, 'find_all', None): 
                 curr = curr.next_sibling
                 continue
-            
-
-            # 오음 찾기
-            if not data['japanese_readings']['goon']:
-                goon_link = curr.find('a', string=lambda s: s and 'Go-on' in s)
-                if goon_link:
-                    li = goon_link.find_parent('li')
-                    if li:
-                         text = li.get_text(separator=' ', strip=True)
-                         if 'Go-on' in text:
-                             val = text.split('Go-on')[-1].strip(': ').strip()
-                             data['japanese_readings']['goon'] = val
-
-            # 한음 찾기
-            if not data['japanese_readings']['kanon']:
-                kanon_link = curr.find('a', string=lambda s: s and ("Kan'on" in s or "Kan-on" in s))
-                if kanon_link:
-                    li = kanon_link.find_parent('li')
-                    if li:
-                         text = li.get_text(separator=' ', strip=True)
-                         val = ""
-                         if "Kan'on" in text:
-                             val = text.split("Kan'on")[-1]
-                         elif "Kan-on" in text:
-                             val = text.split("Kan-on")[-1]
-                         
-                         data['japanese_readings']['kanon'] = val.strip(': ').strip()
-
-            # 당음 찾기
-            if not data['japanese_readings']['toon']:
-                toon_link = curr.find('a', string=lambda s: s and 'Tō-on' in s)
-                if toon_link:
-                    li = toon_link.find_parent('li')
-                    if li:
-                         text = li.get_text(separator=' ', strip=True)
-                         if 'To-on' in text:
-                             val = text.split('To-on')[-1].strip(': ').strip()
-                             data['japanese_readings']['toon'] = val
 
             curr = curr.next_sibling
 
