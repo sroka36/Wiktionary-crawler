@@ -41,3 +41,41 @@
                     # Be careful not to pick up other dialects
                     pass
         return None
+
+
+            # 오음 찾기
+            if not data['japanese_readings']['goon']:
+                goon_link = curr.find('a', string=lambda s: s and 'Go-on' in s)
+                if goon_link:
+                    li = goon_link.find_parent('li')
+                    if li:
+                         text = li.get_text(separator=' ', strip=True)
+                         if 'Go-on' in text:
+                             val = text.split('Go-on')[-1].strip(': ').strip()
+                             data['japanese_readings']['goon'] = val
+
+            # 한음 찾기
+            if not data['japanese_readings']['kanon']:
+                kanon_link = curr.find('a', string=lambda s: s and ("Kan'on" in s or "Kan-on" in s))
+                if kanon_link:
+                    li = kanon_link.find_parent('li')
+                    if li:
+                         text = li.get_text(separator=' ', strip=True)
+                         val = ""
+                         if "Kan'on" in text:
+                             val = text.split("Kan'on")[-1]
+                         elif "Kan-on" in text:
+                             val = text.split("Kan-on")[-1]
+                         
+                         data['japanese_readings']['kanon'] = val.strip(': ').strip()
+
+            # 당음 찾기
+            if not data['japanese_readings']['toon']:
+                toon_link = curr.find('a', string=lambda s: s and 'Tō-on' in s)
+                if toon_link:
+                    li = toon_link.find_parent('li')
+                    if li:
+                         text = li.get_text(separator=' ', strip=True)
+                         if 'To-on' in text:
+                             val = text.split('To-on')[-1].strip(': ').strip()
+                             data['japanese_readings']['toon'] = val
