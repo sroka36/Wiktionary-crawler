@@ -271,14 +271,17 @@ def get_character_data(character):
                       read_list = curr.find_next_sibling()
                       for s in read_list.find_all('span'):
                           if s.find_previous_sibling('b'):
+
                               # 오음 구하기
                               if s.find_previous_sibling('b').find('a').get_text() == "Go-on":
                                   if "on-yomi" in s.get('class', []):
                                       on_temp += s.get_text(separator=" ",strip=True)
+
                               # 한음 구하기
                               if s.find_previous_sibling('b').find('a').get_text() == "Kan-on":
                                   if "on-yomi" in s.get('class', []):
                                       kan_temp += s.get_text(separator=" ",strip=True)
+                                      
                               # 당음 구하기        
                               if s.find_previous_sibling('b').find('a').get_text() == "Tō-on":
                                   if "on-yomi" in s.get('class', []):
