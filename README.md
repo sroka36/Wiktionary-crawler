@@ -7,7 +7,7 @@ Wiktionary crawler for MSC, MC, OC, Japanese pronunciation of Kanji.
 
 Fixing List
 - [x] Cangjie
-- [ ] Mandarin
+- [x] Mandarin
 - [ ] MC
 - [ ] OC
 - [x] MdJ

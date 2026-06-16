@@ -80,30 +80,23 @@ def get_character_data(character):
             chinese_content.append(curr)
             curr = curr.next_sibling
 
-    # 2. Mandarin
-    # We gathered chinese_content, let's process it more robustly
-    # We need to find the specific "Pronunciation" subsection if possible, but searching for "Mandarin" + "zhpron-monospace" usually works uniquely enough.
-    
-    # Specific logic for Mandarin:
-    # Look for "Mandarin" string
-    if chinese_content: # Ensure we found Chinese section 
+    # 5. Mandarin(MSC) 찾기
+    if chinese_content:
         found_mandarin = False
         for node in chinese_content:
             if not getattr(node, 'find_all', None): continue
             
-            # Find "Mandarin" text
+            # "Mandarin" 텍스트 찾기
             mandarin_texts = node.find_all(string=lambda t: t and 'Mandarin' in t)
             for m_text in mandarin_texts:
-                # exclude "Simple Mandarin", "Southwestern Mandarin" if listed separately as headers?
-                # Usually standard Mandarin is just listed as "Mandarin"
-                
-                # Check for pinyin class nearby
+
+                # <li>에 접근
                 parent = m_text.parent
-                
-                # Case A: <li>Mandarin: <span ...>...</span></li>
+
+                # 첫번째 zhpron-monospace 클래스 찾기 (보통 pinyin이 여기에 있음)     
                 pron = parent.find_next(class_='zhpron-monospace')
-                
-                # Verify proximity: checks if pron is within same block
+
+                # 찾았다면 추출해서 저장하고 루프 탈출  
                 if pron:
                     data['mandarin'] = pron.get_text(strip=True)
                     found_mandarin = True
