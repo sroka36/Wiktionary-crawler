@@ -281,12 +281,13 @@ def get_character_data(character):
                               if s.find_previous_sibling('b').find('a').get_text() == "Kan-on":
                                   if "on-yomi" in s.get('class', []):
                                       kan_temp += s.get_text(separator=" ",strip=True)
-                                      
+
                               # 당음 구하기        
                               if s.find_previous_sibling('b').find('a').get_text() == "Tō-on":
                                   if "on-yomi" in s.get('class', []):
                                       to_temp += s.get_text(separator=" ",strip=True)
 
+                      # 없으면 None으로 처리
                       if(on_temp == ""): on_temp = None 
                       if(kan_temp == ""): kan_temp = None
                       if(to_temp == ""): to_temp = None
