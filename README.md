@@ -10,5 +10,5 @@ Fixing List
 - [x] MSC(Mandarin)
 - [ ] MC
 - [ ] OC
-- [x] MdJ
+- [x] MdJ(Kan-on, Go-on, Tō-on)
 
