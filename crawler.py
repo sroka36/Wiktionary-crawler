@@ -299,9 +299,10 @@ def get_character_data(character):
 
     return data
 
+# 실행 시 스크립트
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='Crawl Wiktionary for Chinese character data.')
-    parser.add_argument('character', help='The Chinese character to look up')
+    parser = argparse.ArgumentParser(description='Crawl Wiktionary for datas of Kanji.')
+    parser.add_argument('character', help='Kanji to look up.')
     args = parser.parse_args()
 
     result = get_character_data(args.character)
