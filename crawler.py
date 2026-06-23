@@ -301,7 +301,7 @@ def get_character_data(character):
 
 # 실행 시 스크립트
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='Crawl Wiktionary for datas of Kanji.')
+    parser = argparse.ArgumentParser(description='Crawl Wiktionary for informations of Kanji.')
     parser.add_argument('character', help='Kanji to look up.')
     args = parser.parse_args()
 
