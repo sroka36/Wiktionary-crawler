@@ -93,7 +93,7 @@ def get_character_data(character):
                 # <li>에 접근
                 parent = m_text.parent
 
-                # 첫번째 zhpron-monospace 클래스 찾기 (보통 pinyin이 여기에 있음)     
+                # 첫번째 zhpron-monospace 클래스 찾기 (보통 pin'yin이 여기에 있음)     
                 pron = parent.find_next(class_='zhpron-monospace')
 
                 # 찾았다면 추출해서 저장하고 루프 탈출  
