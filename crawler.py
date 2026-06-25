@@ -103,7 +103,7 @@ def get_character_data(character):
                     break
             if found_mandarin: break
 
-    # 3. Middle Chinese
+    # 3. Middle Chinese(MC) 찾기
     if chinese_content:
         found_mc = False
         # We will try to gather all MC readings since characters often have multiple.
