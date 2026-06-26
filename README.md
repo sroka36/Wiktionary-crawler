@@ -1,7 +1,7 @@
 # Wiktionary crawler
 
 
-Wiktionary crawler for MSC, MC, OC, Japanese pronunciation and Cangjie input of Kanji.
+Wiktionary crawler for MSC, MC, OC, Japanese pronunciation and Cangjie input method of Kanji.
 
 **It was written by Google Gemini. But I'm reading code and fixing it now.**
 
