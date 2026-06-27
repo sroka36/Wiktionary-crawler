@@ -8,7 +8,10 @@ Wiktionary crawler for MSC, MC, OC, Japanese pronunciation and Cangjie input met
 Fixing List
 - [x] Cangjie
 - [x] MSC (Mandarin)
-- [ ] MC
-- [ ] OC
-- [x] MdJ (Kan-on, Go-on, Tō-on)
+- [ ] MC (Middle Chinese)
+- [ ] OC (Old Chinese)
+- [x] MdJ (Modern Japanese)
+    - [x] Kan-on
+    - [x] Go-on
+    - [x] Tō-on
 
