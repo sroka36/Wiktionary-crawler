@@ -11,7 +11,7 @@ Fixing List
 - [ ] MC (Middle Chinese)
 - [ ] OC (Old Chinese)
 - [x] MdJ (Modern Japanese)
-    - [x] Kan-on
-    - [x] Go-on
-    - [x] Tō-on
+    - [x] Kan-On
+    - [x] Go-On
+    - [x] Tō-On
 
