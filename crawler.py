@@ -105,15 +105,12 @@ def get_character_data(character):
 
     # 3. Middle Chinese(MC) 찾기
     if chinese_content:
-        found_mc = False
-        # We will try to gather all MC readings since characters often have multiple.
-        # But for the current structure, let's try to capture the main one and the Zhengzhang one.
-        
-        # We'll traverse to find "Middle Chinese" entries.
+        # found_mc = False
+        # 여러 개의 발음 중에 메인 발음을 찾을 것
         for node in chinese_content:
             if not getattr(node, 'find_all', None): continue
             
-            # Find all "Middle Chinese" labels
+            # Middle Chinese 부분 찾기
             mc_labels = node.find_all(string=lambda t: t and 'Middle Chinese' in t)
             
             for mc_label in mc_labels:
