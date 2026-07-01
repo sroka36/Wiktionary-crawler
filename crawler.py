@@ -116,7 +116,7 @@ def get_character_data(character):
             for mc_label in mc_labels:
                 li = mc_label.find_parent('li')
                 if li:
-                    # 1. Existing extraction (likely Baxter-Sagart)
+                    # 리스트에서 발음들 찾기
                     pron = li.find(class_='zhpron-monospace')
                     if pron:
                         bs_text = pron.get_text(strip=True)
