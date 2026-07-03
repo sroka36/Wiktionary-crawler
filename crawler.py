@@ -120,7 +120,7 @@ def get_character_data(character):
                     pron = li.find(class_='zhpron-monospace')
                     if pron:
                         bs_text = pron.get_text(strip=True)
-                        # 이미 있으면 유지하고 없으면 추가하기
+                        # 맨 첫번째 값을 구하기 위해 존재여부 확인
                         if data['middle_chinese']['baxter_sagart']:
                             if bs_text not in data['middle_chinese']['baxter_sagart']:
                                 data['middle_chinese']['baxter_sagart'] += ", " + bs_text
